@@ -1,3 +1,17 @@
+/* 
+* This program is free software: you can redistribute it and/or modify  
+* it under the terms of the GNU General Public License as published by  
+* the Free Software Foundation, version 3.
+*
+* This program is distributed in the hope that it will be useful, but 
+* WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+* General Public License for more details.
+*
+* Nombre de archivo: CompoundInterestCalculatorImpl.java
+* Autor: eddiaz
+* Fecha de creación: 9 sep. 2021
+*/
 
 package mx.tis.com.application.service.impl;
 
@@ -5,37 +19,46 @@ import mx.tis.com.application.dto.InitialInvestmentDto;
 import mx.tis.com.application.dto.InvestmentYieldDto;
 import mx.tis.com.application.service.CompoundInterestCalculator;
 import java.util.ArrayList;
-import java.util.List;
 
 
+/**
+ * The Class CompoundInterestCalculatorImpl.
+ */
 public class CompoundInterestCalculatorImpl implements CompoundInterestCalculator {
 
+  /**
+   * Creates the revenue grid.
+   *
+   * @param initialInvestment the initial investment
+   * @return the array list
+   */
   @Override
   public ArrayList<InvestmentYieldDto> createRevenueGrid(InitialInvestmentDto initialInvestment) {
+
     ArrayList<InvestmentYieldDto> investmentYieldGrid = new ArrayList<>();
     InvestmentYieldDto resultInvestmentYield;
-    Double initialInv = 0.0;
-    Double yerlyInp = 0.0;
+
+    Double initialInv = initialInvestment.getInitialInvestment();
+    Double yerlyInp = initialInvestment.getYearlyInput();
     Double invYield = 0.0;
-    Float investmentYield = 0.0f;
+    Float investmentYield = initialInvestment.getInvestmentYield();
     Double finalBal = 0.0;
     Integer investmentYears = initialInvestment.getInvestmentYears();
 
     for (int i = 0; i < investmentYears; i++) {
       if (i == 0) {
-        initialInv = initialInvestment.getInitialInvestment();
-        yerlyInp = initialInvestment.getYearlyInput();
-        investmentYield = initialInvestment.getInvestmentYield();
+
         invYield = (initialInv + yerlyInp) * (investmentYield / 100);
+        Math.ceil(invYield);
         finalBal = initialInv + yerlyInp + invYield;
         resultInvestmentYield = new InvestmentYieldDto(i, initialInv, yerlyInp, invYield, finalBal);
         investmentYieldGrid.add(resultInvestmentYield);
         initialInvestment.setInitialInvestment(finalBal);
       }
-      if(i!=0) {
+      if (i != 0) {
         initialInv = initialInvestment.getInitialInvestment();
-        yerlyInp = (initialInvestment.getYearlyInput()) * 
-                   (1 + (initialInvestment.getYearlyInputIncrement() / 100));
+        yerlyInp = (initialInvestment.getYearlyInput())
+            * (1 + (initialInvestment.getYearlyInputIncrement() / 100));
         invYield = (initialInv + yerlyInp) * (initialInvestment.getInvestmentYield() / 100);
         finalBal = initialInv + yerlyInp + invYield;
         resultInvestmentYield = new InvestmentYieldDto(i, initialInv, yerlyInp, invYield, finalBal);
@@ -49,6 +72,12 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
   }
 
 
+  /**
+   * Validate input.
+   *
+   * @param initialInvestmentDto the initial investment dto
+   * @return true, if successful
+   */
   @Override
   public boolean validateInput(InitialInvestmentDto initialInvestmentDto) {
 
@@ -69,6 +98,11 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
      */
   }
 
+  /**
+   * Sets the default values.
+   *
+   * @param initialInvestmentDto the new default values
+   */
   private void setDefaultValues(InitialInvestmentDto initialInvestmentDto) {
     Double yearlyInput = initialInvestmentDto.getYearlyInput();
     yearlyInput = yearlyInput == null ? 0.0 : yearlyInput;
