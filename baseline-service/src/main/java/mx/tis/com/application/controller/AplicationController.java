@@ -10,45 +10,48 @@
 *
 * Nombre de archivo: AplicationController.java
 * Autor: eddiaz
-* Fecha de creación: 7 sep. 2021
+* Fecha de creación: 9 sep. 2021
 */
+
 
 package mx.tis.com.application.controller;
 
+import java.util.List;
+import mx.tis.com.application.dto.InitialInvestmentDto;
+import mx.tis.com.application.dto.InvestmentYieldDto;
 import mx.tis.com.application.service.CompoundInterestCalculator;
 
 /**
  * The Class AplicationController.
  */
 public class AplicationController {
-  
+
   /** The calculator. */
   private CompoundInterestCalculator calculator;
 
   /**
-   * Gets the calculator.
+   * Instantiates a new aplication controller.
    *
-   * @return the calculator
+   * @param calculator the calculator
    */
-  public CompoundInterestCalculator getCalculator() {
-    return calculator;
+  /* constructor */
+  public AplicationController(CompoundInterestCalculator calculator) {
+    this.calculator = calculator;
   }
 
   /**
-   * Sets the calculator.
+   * Creates the table yield.
    *
-   * @param calculator the new calculator
+   * @param initialInvestment the initial investment
+   * @return the list
    */
-  public void setCalculator(CompoundInterestCalculator calculator) {
-    this.calculator = calculator;
-  }
-  
-  /**
-   * The main method.
-   *
-   * @param args the arguments
-   */
-  public static void main(String[] args) {
+  public List<InvestmentYieldDto> createTableYield(InitialInvestmentDto initialInvestment) {
     
+    if (calculator.validateInput(initialInvestment)) {
+      return calculator.createRevenueGrid(initialInvestment);
+    }
+    throw new CalculatorInputException("El calculo no puede se ejecutado");
   }
+
+
 }
