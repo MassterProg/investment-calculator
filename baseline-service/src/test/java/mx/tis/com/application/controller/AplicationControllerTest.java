@@ -44,10 +44,14 @@ public class AplicationControllerTest {
     
 //    assertEquals(Double.valueOf(3030.00), firstYear.getYearlyInput());
 //    assertEquals(Double.valueOf(15380.00), firstYear.getFinalBalance());
-    System.out.println(Math.ceil(tableYield.get(4).getInitialInvestment()));
-    System.out.println(Math.ceil(tableYield.get(4).getYearlyInput()));
-    System.out.println(Math.ceil(tableYield.get(4).getInvestmentYield()));
-    System.out.println(Math.ceil(tableYield.get(4).getFinalBalance()));
+//    System.out.println(Math.ceil(tableYield.get(4).getInitialInvestment()));
+//    System.out.println(Math.ceil(tableYield.get(4).getYearlyInput()));
+//    System.out.println(Math.ceil(tableYield.get(4).getInvestmentYield()));
+//    System.out.println(Math.ceil(tableYield.get(4).getFinalBalance()));
+    System.out.println(tableYield.get(2).getInitialInvestment());
+    System.out.println(tableYield.get(2).getYearlyInput());
+    System.out.println(tableYield.get(2).getInvestmentYield());
+    System.out.println(tableYield.get(2).getFinalBalance());
   }
 
 

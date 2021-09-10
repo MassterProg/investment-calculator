@@ -47,9 +47,8 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
 
     for (int i = 0; i < investmentYears; i++) {
       if (i == 0) {
-
         invYield = (initialInv + yerlyInp) * (investmentYield / 100);
-        Math.ceil(invYield);
+        invYield = this.roundDouble(invYield);
         finalBal = initialInv + yerlyInp + invYield;
         resultInvestmentYield = new InvestmentYieldDto(i, initialInv, yerlyInp, invYield, finalBal);
         investmentYieldGrid.add(resultInvestmentYield);
@@ -59,7 +58,9 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
         initialInv = initialInvestment.getInitialInvestment();
         yerlyInp = (initialInvestment.getYearlyInput())
             * (1 + (initialInvestment.getYearlyInputIncrement() / 100));
+        yerlyInp = this.roundDouble(yerlyInp);
         invYield = (initialInv + yerlyInp) * (initialInvestment.getInvestmentYield() / 100);
+        invYield = this.roundDouble(invYield);
         finalBal = initialInv + yerlyInp + invYield;
         resultInvestmentYield = new InvestmentYieldDto(i, initialInv, yerlyInp, invYield, finalBal);
         investmentYieldGrid.add(resultInvestmentYield);
@@ -71,6 +72,10 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
     return investmentYieldGrid;
   }
 
+  private double roundDouble(Double number) {
+    return Math.ceil(number);
+    
+  }
 
   /**
    * Validate input.
