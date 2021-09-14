@@ -1,17 +1,15 @@
-/* 
-* This program is free software: you can redistribute it and/or modify  
-* it under the terms of the GNU General Public License as published by  
-* the Free Software Foundation, version 3.
-*
-* This program is distributed in the hope that it will be useful, but 
-* WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
-* General Public License for more details.
-*
-* Nombre de archivo: CompoundInterestCalculatorImpl.java
-* Autor: eddiaz
-* Fecha de creación: 9 sep. 2021
-*/
+/*
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * Nombre de archivo: CompoundInterestCalculatorImpl.java Autor: eddiaz Fecha de creación: 9 sep.
+ * 2021
+ */
+
 
 package mx.tis.com.application.service.impl;
 
@@ -19,11 +17,13 @@ import mx.tis.com.application.dto.InitialInvestmentDto;
 import mx.tis.com.application.dto.InvestmentYieldDto;
 import mx.tis.com.application.service.CompoundInterestCalculator;
 import java.util.ArrayList;
+import org.springframework.stereotype.Service;
 
 
 /**
  * The Class CompoundInterestCalculatorImpl.
  */
+@Service
 public class CompoundInterestCalculatorImpl implements CompoundInterestCalculator {
 
   /**
@@ -50,7 +50,8 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
         invYield = (initialInv + yerlyInp) * (investmentYield / 100);
         invYield = this.roundDouble(invYield);
         finalBal = initialInv + yerlyInp + invYield;
-        resultInvestmentYield = new InvestmentYieldDto(i, initialInv, yerlyInp, invYield, finalBal);
+        resultInvestmentYield =
+            new InvestmentYieldDto(i + 1, initialInv, yerlyInp, invYield, finalBal);
         investmentYieldGrid.add(resultInvestmentYield);
         initialInvestment.setInitialInvestment(finalBal);
       }
@@ -62,7 +63,8 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
         invYield = (initialInv + yerlyInp) * (initialInvestment.getInvestmentYield() / 100);
         invYield = this.roundDouble(invYield);
         finalBal = initialInv + yerlyInp + invYield;
-        resultInvestmentYield = new InvestmentYieldDto(i, initialInv, yerlyInp, invYield, finalBal);
+        resultInvestmentYield =
+            new InvestmentYieldDto(i + 1, initialInv, yerlyInp, invYield, finalBal);
         investmentYieldGrid.add(resultInvestmentYield);
         initialInvestment.setInitialInvestment(finalBal);
         initialInvestment.setYearlyInput(yerlyInp);
@@ -72,9 +74,14 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
     return investmentYieldGrid;
   }
 
+  /**
+   * Round double.
+   *
+   * @param number the number
+   * @return the double
+   */
   private double roundDouble(Double number) {
     return Math.ceil(number);
-    
   }
 
   /**
@@ -95,12 +102,6 @@ public class CompoundInterestCalculatorImpl implements CompoundInterestCalculato
     valid = valid && (initialInvestmentDto.getInvestmentYield() > 0.0);
     return valid;
 
-
-    /*
-     * COMO LO PENSE EN UN INICIO if(input.getInitialInvestment()>1_000 && input.getYearlyInput()>=
-     * 0 && input.getYearlyInputIncrement()>= 0 && input.getInvestmentYield()>=0){ return true;
-     * }else { return false; }
-     */
   }
 
   /**
